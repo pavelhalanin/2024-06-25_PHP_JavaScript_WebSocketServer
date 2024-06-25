@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="websoket-status"></div>
+    <div id="websoket-send-status"></div>
+    <button onclick="myFunction()">Отправить</button>
+    <table>
+        <tbody>
+        <tbody id="table_tbody">
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>123456</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>234567</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox"></td>
+                <td>345678</td>
+            </tr>
+        </tbody>
+        </tbody>
+    </table>
+    <script>
+        function myFunction() {
+            const socket = new WebSocket('ws:localhost:12345');
+            socket.onopen = function () {
+                console.log('open');
+                document.getElementById('websoket-send-status').innerHTML = '';
+                document.getElementById('websoket-status').innerHTML = 'ON - Вы подключены к серверу';
+
+                const NUMBER_ARRAY = [];
+                const TABLE_TBODY = document.querySelectorAll('#table_tbody > tr');
+                for (let i = 0; i < TABLE_TBODY.length; ++i) {
+                    const CURRENT = TABLE_TBODY[i];
+                    const ARRAY_TD = CURRENT.querySelectorAll('td');
+                    const TD_1 = ARRAY_TD[0];
+                    const TD_2 = ARRAY_TD[1];
+
+                    const INPUT = TD_1.querySelector('input');
+                    const INPUT_IS_CHECKED = INPUT.checked;
+
+                    const NUMBER = TD_2.innerHTML;
+
+                    console.log(`${NUMBER} => ${INPUT_IS_CHECKED}`);
+
+                    if (INPUT_IS_CHECKED) {
+                        NUMBER_ARRAY.push(NUMBER);
+                    }
+                }
+
+                const STRING_JSON_ARRAY = JSON.stringify(NUMBER_ARRAY);
+                socket.send(STRING_JSON_ARRAY);
+                document.getElementById('websoket-send-status').innerHTML = `Отправлено сообщение: ${STRING_JSON_ARRAY}`;
+                socket.close();
+            }
+
+            socket.onclose = function () {
+                console.log('close');
+                document.getElementById('websoket-send-status').innerHTML = '';
+                document.getElementById('websoket-status').innerHTML = 'OFF - Вы не подключены к серверу';
+            }
+        }
+    </script>
+</body>
+
+</html>
