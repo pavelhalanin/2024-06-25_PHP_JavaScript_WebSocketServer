@@ -30,3 +30,9 @@
     ```
 
 1. Open frontend (open `socket_frontend.html` in Firefox Browser)
+
+## References
+
+1. PHP For Windows: Binaries and sources Releases [Electronic resource]. Access mode: https://windows.php.net/download#php-8.1. Access date: 25.06.2024.
+1. Делаем вебсокеты на PHP с нуля / Хабр [Electronic resource]. Access mode: https://habr.com/ru/articles/209864/. Access date: 25.06.2024.
+1. bash - Change text-color of php output on command prompt? - Ask Ubuntu [Electronic resource]. Access mode: https://askubuntu.com/questions/801299/change-text-color-of-php-output-on-command-prompt. Access date: 25.06.2024.
